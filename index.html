@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VTail | VR Aviation World Creator</title>
+    <meta name="description" content="VTail — VRChat aviation worlds and VR photography. Explore detailed aviation-themed VR experiences and world showcases.">
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="worlds/worlds-data.js"></script>
+    <script src="/static/gallery/gallery-data.js"></script>
+    <!-- Centralized styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-slate-900 text-gray-100 font-roboto overflow-x-hidden">
+    <!-- ========== SHARED HEADER (loaded by components.js) ========== -->
+    <div id="site-header"></div>
+
+    <!-- Hero Section -->
+    <section class="hero-bg relative z-10 min-h-screen flex flex-col justify-center pt-16 overflow-hidden">
+        <!-- Background Video -->
+        <div class="absolute inset-0 z-0">
+            <video autoplay loop muted playsinline class="w-full h-full object-cover opacity-75" id="hero-video">
+                <source src="\static\hero-background.mp4" type="video/mp4">
+            </video>
+            
+            <!-- Photo Hero Carousel -->
+            <div id="hero-carousel" class="hidden absolute inset-0 w-full h-full">
+                <div id="carousel-container" class="relative w-full h-full">
+                    <!-- Photos will be injected here by JS -->
+                </div>
+            </div>
+            
+            <!--<div class="absolute inset-0 bg-slate-900/50"></div> -->
+        </div>
+        
+        <!-- Main content centered vertically -->
+        <div class="flex-1 flex items-center justify-center">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center relative z-10" data-aos="fade-up">
+                <h1 class="text-4xl sm:text-5xl md:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-cyan-400">
+                    VTail
+                </h1>
+                <p class="text-lg sm:text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-8 sm:mb-10 px-4">
+                    VRChat Aviation Worlds and VR Photography
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4 px-4 max-w-sm sm:max-w-none mx-auto">
+                    <a href="#worlds" class="px-6 sm:px-8 py-3 bg-blue-600 hover:bg-blue-700 rounded-md font-medium transition duration-300">
+                        Explore Worlds
+                    </a>
+                    <a href="#contact" class="px-6 sm:px-8 py-3 border border-blue-400 hover:bg-blue-900/30 rounded-md font-medium transition duration-300">
+                        Get in Touch
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scroll indicator at bottom -->
+        <div class="flex justify-center pb-8">
+            <div class="scroll-indicator" style="margin-left: 12px;">
+                <a href="#about" class="text-gray-400 hover:text-white flex items-center justify-center w-12 h-12 relative">
+                    <i data-feather="chevron-down" class="w-8 h-8 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="relative z-10 py-20 bg-slate-800/50 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="md:flex items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0" data-aos="fade-right">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6 text-blue-400">About Me</h2>
+                    <p class="text-lg text-gray-300 mb-6">
+                        Hello! I'm VTail, a developer and VRChat world creator focused on aviation experiences. I strive to create immersive, highly
+                         detailed worlds that encompass the excitement of flight for anyone to enjoy.
+                    </p>
+                    <p class="text-lg text-gray-300 mb-6">
+                        My goal for these VRC worlds is to raise the bar for realism and immersion typically not seen on the platform. By expanding
+                         upon existing code, implementing new features, meticulously refinining values and parameters, these worlds are designed to
+                          be the best aviation experiences available in VRChat.
+                    </p>
+                    <!--
+                    <p class="text-lg text-gray-300">
+                        I also create VR aviation photography and videos, showcasing the the amazing worlds and events created by the VR aviation
+                         community as a whole.
+                    </p>
+                -->
+                </div>
+                <div class="md:w-1/2 md:pl-16" data-aos="fade-left">
+                    <div class="bg-slate-800 rounded-xl overflow-hidden border border-slate-700">
+                        <img src="static/VTail_Selfie.jpg" alt="VTail's Avatar" class="w-full h-auto">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Worlds Section -->
+    <section id="worlds" class="relative z-10 py-20 bg-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-blue-400">Featured Worlds</h2>
+            </div>
+
+            <!-- Featured worlds will be loaded here by JavaScript -->
+            <div id="featured-worlds-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-3">
+                <!-- World cards will be dynamically loaded from worlds-data.js -->
+            </div>
+            <div class="text-center mt-16" data-aos="fade-up">
+                <a href="/worlds.html" class="inline-flex items-center px-6 py-3 border border-blue-400 text-blue-400 hover:bg-blue-900/30 rounded-md transition duration-300">
+                    View All Worlds <i data-feather="chevron-right" class="w-5 h-5 ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+    <!--
+    <!-- Gallery Section 
+    <section id="gallery" class="relative z-10 py-20 bg-slate-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-blue-400">Gallery</h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">Visual showcase of my world design process</p>
+            </div>
+            
+            <div id="gallery-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <!-- Featured gallery items loaded dynamically from gallery-data.js
+            </div>
+            <div class="text-center mt-16" data-aos="fade-up">
+                <a href="/static/gallery/gallery.html" class="inline-flex items-center px-6 py-3 border border-blue-400 text-blue-400 hover:bg-blue-900/30 rounded-md transition duration-300">
+                    View All Photos <i data-feather="chevron-right" class="w-5 h-5 ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+    -->
+    <!-- Contact Cards Section -->
+    <section id="contact" class="relative z-10 py-20 bg-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-blue-400">Connect With Me</h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">Follow my work and get in touch on these platforms</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Twitter/X Card -->
+                <a href="https://x.com/VTail64" target="_blank" class="bg-slate-800/50 rounded-xl p-6 border border-slate-700 hover:border-blue-400 transition duration-300 transform hover:-translate-y-2" data-aos="fade-up" data-aos-delay="100">
+                    <div class="flex flex-col items-center text-center">
+                        <div class="bg-blue-500/10 p-4 rounded-full mb-4">
+                            <i data-feather="twitter" class="text-blue-400 w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Twitter / X</h3>
+                        <p class="text-gray-400 mb-4">Follow for updates and WIP shots</p>
+                        <span class="text-blue-400">@VTail64</span>
+                    </div>
+                </a>
+
+                <!-- YouTube Card -->
+                <a href="https://www.youtube.com/@VTail64" target="_blank" class="bg-slate-800/50 rounded-xl p-6 border border-slate-700 hover:border-red-400 transition duration-300 transform hover:-translate-y-2" data-aos="fade-up" data-aos-delay="200">
+                    <div class="flex flex-col items-center text-center">
+                        <div class="bg-red-500/10 p-4 rounded-full mb-4">
+                            <i data-feather="youtube" class="text-red-400 w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">YouTube</h3>
+                        <p class="text-gray-400 mb-4">Watch flight videos and world tours</p>
+                        <span class="text-red-400">@VTail64</span>
+                    </div>
+                </a>
+
+                <!-- Discord Card -->
+                <!--<div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700 hover:border-indigo-400 transition duration-300 transform hover:-translate-y-2 cursor-pointer" data-aos="fade-up" data-aos-delay="300">
+                    <div class="flex flex-col items-center text-center">
+                        <div class="bg-indigo-500/10 p-4 rounded-full mb-4">
+                            <svg class="w-8 h-8 text-indigo-400" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Discord</h3>
+                        <p class="text-gray-400 mb-4">Join the community</p>
+                        <span class="text-indigo-400">VTail</span>
+                    </div>
+                </div>-->
+
+                <!-- VRChat Card -->
+                <a href="https://vrchat.com/home/user/usr_fa08662f-eeb0-4e1c-bc69-de1c91c0ab17" target="_blank" class="bg-slate-800/50 rounded-xl p-6 border border-slate-700 hover:border-cyan-400 transition duration-300 transform hover:-translate-y-2" data-aos="fade-up" data-aos-delay="400">
+                    <div class="flex flex-col items-center text-center">
+                        <div class="bg-cyan-500/10 p-4 rounded-full mb-4">
+                            <img src="static/VRC_Logo_W.png" alt="VRChat" class="w-8 h-8">
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">VRChat</h3>
+                        <p class="text-gray-400 mb-4">Visit my worlds in VR</p>
+                        <span class="text-cyan-400">VTail</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Image Modal -->
+    <div id="imageModal" class="modal">
+        <span class="modal-close">&times;</span>
+        <div class="modal-content-wrapper">
+            <div class="modal-image-container">
+                <img class="modal-content" id="modalImage" alt="Fullscreen image">
+            </div>
+            <div class="modal-info-panel" id="photoInfo">
+                <!-- Photo information will be loaded here by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== SHARED FOOTER (loaded by components.js) ========== -->
+    <div id="site-footer"></div>
+
+    <!-- ========== Component loader (must come after Feather Icons) ========== -->
+    <script src="partials/components.js"></script>
+
+    <script>
+        // Add Roboto font to Tailwind config
+        tailwind.config = {
+            theme: {
+                fontFamily: {
+                    'roboto': ['Roboto', 'sans-serif'],
+                }
+            }
+        }
+        
+        // Adjust video opacity on mobile to prevent visibility issues
+        function handleVideoOpacity() {
+            const video = document.getElementById('hero-video');
+            if (window.innerWidth < 768) {
+                video.style.opacity = 0.15;
+            }
+        }
+
+        // Run once on load and on resize
+        handleVideoOpacity();
+        window.addEventListener('resize', handleVideoOpacity);
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load featured worlds from data
+            loadFeaturedWorlds('featured-worlds-container');
+
+            // Load featured gallery photos from data
+            //loadFeaturedGallery('gallery-container');
+            
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: true
+            });
+
+            // NOTE: feather.replace() and mobile menu are now handled by components.js
+
+            // Try to autoplay video (may not work on all browsers)
+            const video = document.getElementById('hero-video');
+            video.play().catch(e => console.log("Autoplay prevented:", e));
+
+            // Handle "Recently Updated" badge visibility
+            const oneMonthInMs = 30 * 24 * 60 * 60 * 1000;
+            const now = new Date();
+            
+            document.querySelectorAll('.world-card').forEach(card => {
+                const updateDateStr = card.getAttribute('data-update-date');
+                if (updateDateStr) {
+                    const updateDate = new Date(updateDateStr);
+                    const timeDiff = now - updateDate;
+                    const badge = card.querySelector('.recently-updated-badge');
+                    if (badge && timeDiff > oneMonthInMs) {
+                        badge.style.display = 'none';
+                    }
+                }
+            });
+
+            // Gallery modal functionality
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            const infoPanel = document.getElementById('photoInfo');
+            const closeBtn = document.querySelector('.modal-close');
+
+            function syncPanelHeight() {
+                infoPanel.style.maxHeight = modalImg.offsetHeight + 'px';
+            }
+
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('gallery-item')) {
+                    const photoId = e.target.getAttribute('data-photo-id');
+                    if (photoId) {
+                        showPhotoModal(photoId);
+                        if (modalImg.complete) {
+                            syncPanelHeight();
+                        } else {
+                            modalImg.onload = syncPanelHeight;
+                        }
+                    }
+                }
+            });
+
+            window.addEventListener('resize', () => {
+                if (modal.classList.contains('show')) syncPanelHeight();
+            });
+
+            function closeModal() {
+                modal.classList.remove('show');
+                document.body.style.overflow = '';
+            }
+
+            closeBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+            document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+            // Initialize hero carousel
+            initHeroCarousel();
+        });
+
+        /* Hero Carousel Configuration */
+        const heroUseCarousel = false; // Set to true to use photo carousel
+        const heroCarouselPhotos = [
+            '/static/worlds/navalinterceptor/hero/world_NavalInterceptor_c1.jpg',
+            '/static/worlds/projektviggen/hero/world_projektviggen_c1.jpg',
+            '/static/worlds/flightweek/hero/fw_c1.jpg',
+            '/static/worlds/navalinterceptor/hero/world_NavalInterceptor_c2.jpg',
+            '/static/worlds/projektviggen/hero/world_projektviggen_c2.jpg'
+        ];
+        const heroCarouselInterval = 6000; // Time between photo transitions (ms)
+
+        let heroCarouselIndex = 0;
+        let heroCarouselTimer = null;
+
+        function initHeroCarousel() {
+            if (!heroUseCarousel || heroCarouselPhotos.length === 0) return;
+
+            const carousel = document.getElementById('hero-carousel');
+            const video = document.getElementById('hero-video');
+            const container = document.getElementById('carousel-container');
+
+            // Hide video, show carousel
+            if (video) video.classList.add('hidden');
+            carousel.classList.remove('hidden');
+
+            // Create slide elements
+            heroCarouselPhotos.forEach((photo, index) => {
+                const slide = document.createElement('img');
+                slide.src = photo;
+                slide.alt = `Hero carousel slide ${index + 1}`;
+                slide.className = `carousel-slide absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000`;
+                slide.style.opacity = index === 0 ? '1' : '0';
+                container.appendChild(slide);
+            });
+
+            // Start carousel rotation
+            heroCarouselTimer = setInterval(rotateHeroCarousel, heroCarouselInterval);
+        }
+
+        function rotateHeroCarousel() {
+            const slides = document.querySelectorAll('.carousel-slide');
+            if (slides.length === 0) return;
+
+            // Fade out current slide
+            slides[heroCarouselIndex].style.opacity = '0';
+
+            // Move to next slide
+            heroCarouselIndex = (heroCarouselIndex + 1) % slides.length;
+
+            // Fade in next slide
+            slides[heroCarouselIndex].style.opacity = '1';
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Worlds - VTail | VR Aviation World Creator</title>
+    <meta name="description" content="Explore all VRChat aviation worlds created by VTail — detailed, immersive experiences focused on flight and aircraft." />
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <!-- Centralized styles -->
+    <link rel="stylesheet" href="styles.css">
+    <script src="worlds/worlds-data.js"></script>
+</head>
+<body class="bg-slate-900 text-gray-100 font-roboto overflow-x-hidden">
+    <!-- ========== SHARED HEADER (loaded by components.js) ========== -->
+    <div id="site-header"></div>
+
+    <!-- Hero Section -->
+    <section class="relative z-10 bg-gradient-to-b from-slate-800 to-slate-900 pt-24 pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center" data-aos="fade-up">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-cyan-400">
+                    All Worlds
+                </h1>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    Explore my complete collection of VRChat aviation worlds
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section class="relative z-10 py-12 bg-slate-900 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 max-w-2xl mx-auto">
+                <!-- Total Worlds Stat -->
+                <div class="bg-gradient-to-br from-blue-500/10 to-cyan-500/10 border border-blue-500/30 rounded-lg p-8 text-center" data-aos="fade-up">
+                    <div class="flex items-center justify-center mb-2">
+                        <i data-feather="globe" class="w-6 h-6 text-blue-400 mr-2"></i>
+                        <p class="text-gray-400 text-sm uppercase tracking-wider">Worlds Created</p>
+                    </div>
+                    <p class="text-4xl md:text-5xl font-bold text-white" id="total-worlds-count">-</p>
+                </div>
+
+                <!-- Total Visits Stat -->
+                <div class="bg-gradient-to-br from-cyan-500/10 to-blue-500/10 border border-cyan-500/30 rounded-lg p-8 text-center" data-aos="fade-up" data-aos-delay="100">
+                    <div class="flex items-center justify-center mb-2">
+                        <i data-feather="trending-up" class="w-6 h-6 text-cyan-400 mr-2"></i>
+                        <p class="text-gray-400 text-sm uppercase tracking-wider">Total Visits</p>
+                    </div>
+                    <p class="text-4xl md:text-5xl font-bold text-white" id="total-visits-count">-</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Worlds Grid -->
+    <section class="relative z-10 py-20 bg-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- All worlds will be loaded here by JavaScript -->
+            <div id="all-worlds-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch">
+                <!-- World cards will be dynamically loaded from worlds-data.js -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== SHARED FOOTER (loaded by components.js) ========== -->
+    <div id="site-footer"></div>
+
+    <!-- ========== Component loader (must come after Feather Icons) ========== -->
+    <script src="/partials/components.js"></script>
+
+    <script>
+        // Add Roboto font to Tailwind config
+        tailwind.config = {
+            theme: {
+                fontFamily: {
+                    'roboto': ['Roboto', 'sans-serif'],
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Calculate and display statistics
+            const totalWorlds = worldsData.length;
+            const totalVisits = worldsData.reduce((sum, world) => sum + (world.visits || 0), 0);
+            
+            document.getElementById('total-worlds-count').textContent = totalWorlds;
+            document.getElementById('total-visits-count').textContent = totalVisits.toLocaleString();
+            
+            // Load all worlds from data
+            loadAllWorlds('all-worlds-container');
+            
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: true
+            });
+            feather.replace();
+
+            // Handle "Recently Updated" badge visibility
+            const oneMonthInMs = 30 * 24 * 60 * 60 * 1000; // 30 days in milliseconds
+            const now = new Date();
+            
+            document.querySelectorAll('.world-card').forEach(card => {
+                const updateDateStr = card.getAttribute('data-update-date');
+                if (updateDateStr) {
+                    const updateDate = new Date(updateDateStr);
+                    const timeDiff = now - updateDate;
+                    const badge = card.querySelector('.recently-updated-badge');
+                    
+                    // Hide badge if update is older than 1 month
+                    if (badge && timeDiff > oneMonthInMs) {
+                        badge.style.display = 'none';
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

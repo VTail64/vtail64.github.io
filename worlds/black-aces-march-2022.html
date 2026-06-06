@@ -1,0 +1,452 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Black Aces: September Showcase 2023 - VTail</title>
+    <meta name="description" content="Black Aces September 2023 brings the F-14A and MiG-23 MLA into a public VRChat aviation showcase created by VTail." />
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <!-- Centralized styles -->
+    <link rel="stylesheet" href="/styles.css">
+    <!-- Data sources: worlds-data contains all world data including changelog file references -->
+    <script src="/worlds/worlds-data.js"></script>
+</head>
+<body class="bg-slate-900 text-gray-100 font-roboto overflow-x-hidden">
+
+    <!--  Shared Header (loaded by components.js) -->
+    <div id="site-header"></div>
+
+    <!-- Hero Media -->
+    <section class="hero-bg relative z-10 min-h-screen flex flex-col justify-center pt-16 overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <!-- Video Hero (toggle with heroUseCarousel flag below) -->
+            <video autoplay loop muted playsinline class="w-full h-full object-cover opacity-75 hero-bg-media" id="hero-video">
+                <source src="/static/hero-background.mp4" type="video/mp4">
+            </video>
+            
+            <!-- Photo Hero (toggle with heroUseCarousel flag below) -->
+            <div id="hero-carousel" class="hidden absolute inset-0 w-full h-full">
+                <div id="carousel-container" class="relative w-full h-full">
+                    <!-- Photos will be injected here by JS -->
+                </div>
+            </div>
+            
+            <div class="absolute inset-0 bg-slate-900/40"></div>
+        </div>
+
+        <div class="flex-1 flex items-center justify-center">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center relative z-10" data-aos="fade-up">
+                <p class="text-sm uppercase tracking-widest text-blue-400 mb-3 font-medium">VRChat World</p>
+                <h1 id="page-world-title" class="text-4xl sm:text-5xl md:text-7xl font-bold mb-6 pb-2 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-cyan-400">
+                </h1>
+                <p id="page-world-tagline" class="text-lg sm:text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-10 px-4">
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4 px-4 max-w-sm sm:max-w-none mx-auto">
+                    <a href="#world-info" class="px-6 sm:px-8 py-3 bg-blue-600 hover:bg-blue-700 rounded-md font-medium transition duration-300">
+                        World Details
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex justify-center pb-8 relative z-10">
+            <div class="scroll-indicator">
+                <a href="#world-info" class="text-gray-400 hover:text-white flex items-center justify-center w-12 h-12 relative">
+                    <i data-feather="chevron-down" class="w-8 h-8 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- World Info -->
+    <section id="world-info" class="relative z-10 bg-slate-800/50 border-y border-slate-700/50 py-10">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 sm:grid-cols-4 gap-8 text-center" data-aos="fade-up">
+
+                <!-- Release Date -->
+                <div class="flex flex-col items-center gap-2">
+                    <div class="w-10 h-10 rounded-full bg-blue-600/20 border border-blue-500/30 flex items-center justify-center mb-1">
+                        <i data-feather="calendar" class="w-4 h-4 text-blue-400"></i>
+                    </div>
+                    <p class="text-xs uppercase tracking-widest text-gray-500 font-medium">World Released</p>
+                    <p class="text-lg font-semibold text-white" id="info-release-date">â€”</p>
+                </div>
+
+                <!-- Current Version -->
+                <div class="flex flex-col items-center gap-2">
+                    <div class="w-10 h-10 rounded-full bg-cyan-600/20 border border-cyan-500/30 flex items-center justify-center mb-1">
+                        <i data-feather="tag" class="w-4 h-4 text-cyan-400"></i>
+                    </div>
+                    <p class="text-xs uppercase tracking-widest text-gray-500 font-medium">Current Version</p>
+                    <p class="text-lg font-semibold text-white font-mono" id="info-version">â€”</p>
+                    <p class="text-xs text-gray-500" id="info-version-date"></p>
+                </div>
+
+                <!-- Platforms -->
+                <div class="flex flex-col items-center gap-2">
+                    <div class="w-10 h-10 rounded-full bg-green-600/20 border border-green-500/30 flex items-center justify-center mb-1">
+                        <i data-feather="monitor" class="w-4 h-4 text-green-400"></i>
+                    </div>
+                    <p class="text-xs uppercase tracking-widest text-gray-500 font-medium">Compatibility</p>
+                    <div id="info-platforms" class="flex flex-col items-center justify-center gap-2 mt-1"></div>
+                </div>
+
+                <!-- World Visits -->
+                <div class="flex flex-col items-center gap-2">
+                    <div class="w-10 h-10 rounded-full bg-violet-600/20 border border-violet-500/30 flex items-center justify-center mb-1">
+                        <i data-feather="eye" class="w-4 h-4 text-violet-400"></i>
+                    </div>
+                    <p class="text-xs uppercase tracking-widest text-gray-500 font-medium">World Visits</p>
+                    <p class="text-lg font-semibold text-white" id="info-visits">â€”</p>
+                    <p class="text-xs text-gray-500" id="info-visits-date"></p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section class="relative z-10 py-20 bg-slate-900">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            <div class="text-center mb-14" data-aos="fade-up">
+                <h2 class="text-2xl md:text-3xl font-bold mb-2 text-white">About This World</h2>
+                <div class="w-16 h-1 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full mx-auto"></div>
+            </div>
+
+            <!-- About Section 1: text left, image right -->
+            <div class="flex flex-col md:flex-row items-center gap-10 mb-16" data-aos="fade-up">
+                <div class="flex-1 text-gray-300 leading-relaxed space-y-4 text-base md:text-lg">
+                    <p id="about-paragraph-1">
+                        To help set up a showcase for what would have been an empty month for the Black Aces, I was asked to collaborate with VRC world developers RaptorItasha and Non to create an ensemble of aircraft to perform with.
+                    </p>
+                </div>
+                <div id="about-media-1" class="flex-1 w-full" data-aos="fade-left">
+                    <img id="about-image-1" src="/static/worlds/sw22/world_sw2022_p1.jpg"
+                         alt=""
+                         class="w-full h-64 md:h-72 object-cover rounded-xl border border-slate-700/60 shadow-lg shadow-black/40">
+                </div>
+            </div>
+
+            <!-- About Section 2: image left, text right -->
+            <div class="flex flex-col md:flex-row-reverse items-center gap-10 mb-16" data-aos="fade-up">
+                <div class="flex-1 text-gray-300 leading-relaxed space-y-4 text-base md:text-lg">
+                    <p id="about-paragraph-3">
+                        Tasked with handling the world itself as well as utilizing several of my aircraft that were recently completed for the Crossroads Island, specifically the Su-33, VVA-14, and the newly created Yak-28B to be added into Crossroads Island afterwards.
+                    </p>
+                </div>
+                <div class="flex-1 w-full" data-aos="fade-right">
+                    <img id="about-image-2" src="/static/worlds/sw22/world_sw2022_p2.jpg"
+                         alt=""
+                         class="w-full h-64 md:h-72 object-cover rounded-xl border border-slate-700/60 shadow-lg shadow-black/40">
+                </div>
+            </div>
+
+            <!-- VRC Link -->
+            <div class="flex justify-center" data-aos="fade-up">
+                <a id="vrc-link"
+                   href="#"
+                   target="_blank" rel="noopener noreferrer"
+                   class="inline-flex items-center gap-3 px-7 py-3.5 bg-blue-600 hover:bg-blue-500
+                          text-white font-semibold rounded-lg transition duration-300 shadow-lg shadow-blue-900/40
+                          hover:shadow-blue-700/40 hover:-translate-y-0.5 active:translate-y-0">
+                    <img src="/static/VRC_Logo_W.png" alt="VRChat" class="w-5 h-5">
+                    Visit in VRChat
+                    <i data-feather="external-link" class="w-4 h-4"></i>
+                </a>
+            </div>
+
+            <!-- Featured Aircraft (removed if not applicable)-->
+            <div class="mt-20 pt-12 border-t border-slate-700/60" data-aos="fade-up">
+                <h3 class="text-xl font-bold text-white mb-8 text-center">Featured Aircraft</h3>
+                <div id="aircraft-gallery" class="flex flex-wrap justify-center gap-8 items-center">
+                    <!-- Aircraft silhouettes injected by JS -->
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- Development Blog (removed if not applicable) -->
+    <section class="relative z-10 py-16 bg-slate-900">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8" data-aos="fade-up">
+            <div class="rounded-2xl border border-slate-700/60 bg-slate-800/50 p-8 flex flex-col md:flex-row items-center gap-6">
+                <div class="w-14 h-14 flex-shrink-0 rounded-xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center">
+                    <i data-feather="edit-3" class="w-6 h-6 text-blue-400"></i>
+                </div>
+                <div class="flex-1 text-center md:text-left">
+                    <h3 class="text-xl font-bold text-white mb-1">Development Blog</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        See a unique behind-the-scenes look into the development process and features of this world, showcasing in-development media and absurd yapping.
+                    </p>
+                </div>
+                <a id="devblog-link" href=""
+                   class="flex-shrink-0 inline-flex items-center gap-2 px-6 py-3 border border-blue-400
+                          hover:bg-blue-900/30 rounded-lg font-medium transition duration-300 whitespace-nowrap">
+                    Read Dev Blog
+                    <i data-feather="arrow-right" class="w-4 h-4"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- Changelog (removed if not applicable) -->
+    <section class="relative z-10 py-20 bg-slate-900">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8" data-aos="fade-up">
+            <h2 class="text-2xl md:text-3xl font-bold mb-2 text-white">Changelog</h2>
+            <div class="w-16 h-1 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full mb-8"></div>
+            <div id="changelog-container" class="space-y-3"></div>
+        </div>
+    </section>
+
+    <!-- Shared Footer (loaded by components.js) -->
+    <div id="site-footer"></div>
+
+    <!-- Component loader (must come after Feather Icons) -->
+    <script src="/partials/components.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: { fontFamily: { 'roboto': ['Roboto', 'sans-serif'] } }
+        }
+
+        /* Hero Configuration */
+        const heroUseCarousel = true; // Set to true to use photo carousel
+        const heroCarouselPhotos = [
+            '/static/worlds/sw22/hero/world_sw2022_c1.jpg',
+            '/static/worlds/sw22/hero/world_sw2022_c2.jpg',
+            '/static/worlds/sw22/hero/world_sw2022_c3.jpg'
+        ];
+        const heroCarouselInterval = 5000; // Time between photo transitions (ms)
+
+        let heroCarouselIndex = 0;
+        let heroCarouselTimer = null;
+
+        function initHeroCarousel() {
+            if (!heroUseCarousel || heroCarouselPhotos.length === 0) return;
+
+            const carousel = document.getElementById('hero-carousel');
+            const video = document.getElementById('hero-video');
+            const container = document.getElementById('carousel-container');
+
+            // Hide video, show carousel
+            if (video) video.classList.add('hidden');
+            carousel.classList.remove('hidden');
+
+            // Create slide elements
+            heroCarouselPhotos.forEach((photo, index) => {
+                const slide = document.createElement('img');
+                slide.src = photo;
+                slide.alt = `Hero carousel slide ${index + 1}`;
+                slide.className = `carousel-slide absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000`;
+                slide.style.opacity = index === 0 ? '1' : '0';
+                container.appendChild(slide);
+            });
+
+            // Start carousel rotation
+            heroCarouselTimer = setInterval(rotateHeroCarousel, heroCarouselInterval);
+        }
+
+        function rotateHeroCarousel() {
+            const slides = document.querySelectorAll('.carousel-slide');
+            if (slides.length === 0) return;
+
+            // Fade out current slide
+            slides[heroCarouselIndex].style.opacity = '0';
+
+            // Move to next slide
+            heroCarouselIndex = (heroCarouselIndex + 1) % slides.length;
+
+            // Fade in next slide
+            slides[heroCarouselIndex].style.opacity = '1';
+        }
+
+        function handleVideoOpacity() {
+            const video = document.getElementById('hero-video');
+            if (video && !heroUseCarousel) video.style.opacity = window.innerWidth < 768 ? '0.15' : '0.75';
+        }
+
+        handleVideoOpacity();
+        window.addEventListener('resize', handleVideoOpacity);
+
+        function loadChangelogScript(worldId) {
+            const world = getWorldById(worldId);
+            if (world && world.changelogFile) {
+                const script = document.createElement('script');
+                script.src = world.changelogFile;
+                script.onload = function() {
+                    // Changelog script loaded, now render the changelog
+                    if (typeof renderChangelog === 'function') {
+                        renderChangelog('changelog-container');
+                    }
+                };
+                document.head.appendChild(script);
+            }
+        }
+
+        function expandFirstChangelog() {
+            const firstBody = document.querySelector('.changelog-body');
+            if (firstBody) firstBody.style.maxHeight = firstBody.scrollHeight + 'px';
+        }
+
+        const worldtitle = 'black-aces-march-2022';
+
+        // Populate world info section from worlds-data.js
+        function populateWorldInfo() {
+            const world = getWorldById(worldtitle);
+            if (!world) return;
+
+            // Release date
+            const el = id => document.getElementById(id);
+
+            if (el('info-release-date'))
+                el('info-release-date').textContent = world.releaseDate || 'â€”';
+
+            if (el('info-version'))
+                el('info-version').textContent = 'v' + (world.version || 'â€”');
+
+            if (el('info-version-date') && world.versionDate)
+                el('info-version-date').textContent = 'Released ' + world.versionDate;
+
+            // Platforms
+            const platformsEl = el('info-platforms');
+            if (platformsEl && typeof getPlatformBadges === 'function') {
+                const support = typeof world.platformSupport === 'number' ? world.platformSupport : 0;
+                const allBadges = getPlatformBadges(support);
+                const pcBadge = allBadges[0];
+                const secondaryBadges = allBadges.slice(1);
+
+                const pcHtml = `
+                    <div class="w-full flex items-center justify-center">
+                        <span class="platform-badge ${pcBadge.cssClass}">
+                            <i data-feather="${pcBadge.featherIcon}" class="w-3 h-3"></i>
+                            ${pcBadge.label}
+                        </span>
+                    </div>
+                `;
+
+                const secondaryHtml = `
+                    <div class="w-full flex items-center justify-center gap-2">
+                        ${secondaryBadges.map(b => `
+                            <span class="platform-badge ${b.cssClass}">
+                                <i data-feather="${b.featherIcon}" class="w-3 h-3"></i>
+                                ${b.label}
+                            </span>
+                        `).join('')}
+                    </div>
+                `;
+
+                platformsEl.innerHTML = pcHtml + secondaryHtml;
+            }
+
+            // Page Title and Subtitle
+            const titleEl = el('page-world-title');
+            if (titleEl && world.title) titleEl.textContent = world.sitetitle;
+
+            const taglineEl = el('page-world-tagline');
+            if (taglineEl && world.tagline) taglineEl.textContent = world.tagline;
+
+            const devBlogLink = el('devblog-link');
+            const vrcLinkEl = el('vrc-link');
+            const changelogContainer = el('changelog-container');
+            const aircraftGallery = el('aircraft-gallery');
+
+            const removeBlock = (element) => {
+                if (!element) return;
+                const section = element.closest('section');
+                if (section) { section.remove(); return; }
+                const wrapper = element.closest('div');
+                if (wrapper) { wrapper.remove(); return; }
+                element.remove();
+            };
+
+            if (devBlogLink && world.devBlogPage && world.devBlogPage.trim() !== '') {
+                devBlogLink.href = world.devBlogPage;
+            } else {
+                removeBlock(devBlogLink);
+            }
+
+            if (vrcLinkEl && world.vrcUrl && world.vrcUrl.trim() !== '') {
+                vrcLinkEl.href = world.vrcUrl;
+            } else {
+                vrcLinkEl.remove();
+            }
+
+            if (!world.aircraft || world.aircraft.length === 0) {
+                aircraftGallery.parentElement.remove();
+            }
+
+            if (!world.changelogFile || world.changelogFile.trim() === '') {
+                removeBlock(changelogContainer);
+            }
+
+            const visitsEl = el('info-visits');
+            let visits = world.visits || 0;
+            if (typeof avnumber !== 'undefined') visits = avnumber;
+            if (visitsEl) visitsEl.textContent = Number(visits).toLocaleString();
+                if (el('info-visits-date') && world.visitsDate)
+                    el('info-visits-date').textContent = 'As of ' + world.visitsDate;
+
+            // Aircraft gallery
+            if (aircraftGallery && world.aircraft && world.aircraft.length > 0) {
+                aircraftGallery.innerHTML = world.aircraft.map(aircraft => `
+                    <div class="flex flex-col items-center gap-3">
+                        <img src="${aircraft.image}" alt="${aircraft.name}" class="h-60 w-60 object-contain opacity-80 hover:opacity-100 transition duration-200">
+                        <span class="text-xs text-gray-400 text-center max-w-[80px]">${aircraft.name}</span>
+                    </div>
+                `).join('');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            AOS.init({ duration: 800, easing: 'ease-in-out', once: true });
+
+            // Populate data sections before feather.replace() so all icons render in one pass
+            populateWorldInfo();
+
+            // Load and render changelog
+            loadChangelogScript(worldtitle);
+
+            // One feather.replace() covers nav icons, info band, and changelog icons
+            feather.replace();
+
+            // Expand first changelog after feather icons are rendered
+            setTimeout(expandFirstChangelog, 50);
+
+            // Initialize hero carousel or autoplay video
+            if (heroUseCarousel) {
+                initHeroCarousel();
+            } else {
+                const video = document.getElementById('hero-video');
+                if (video) video.play().catch(e => console.log("Autoplay prevented:", e));
+            }
+
+            // Smooth scroll with nav offset
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        e.preventDefault();
+                        const navHeight = document.querySelector('nav').offsetHeight;
+                        const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navHeight;
+                        window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
