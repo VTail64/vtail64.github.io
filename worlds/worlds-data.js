@@ -1,15 +1,15 @@
 // worlds-data.js - Centralized world data storage
 
 const worldsData = [
-    /*{
+    {
         id: "operation-hammerhead",
         title: "Operation Hammerhead (Working Title)",
-        description: "In an alternate timeline, Japan rebuilds it's military force, and strikes one more. You and your team must attack the invading forces to take back Midway Atoll.",
+        description: "Reclaim an occupied island from invading forces in this team-based PvE world.",
         image: "static/worlds/fleetdefense/world_fd.jpg",
-        version: "0.1.0",
-        releaseDate: "Coming Soon",     // Placeholder until release
-        versionDate: "XX/XX/2026",     // Date this specific version was released
-        updateDate: "XX/XX/2026",
+        version: "0.0.0",
+        releaseDate: "XX/XX/2027",     // Placeholder until release
+        versionDate: "XX/XX/XXXX",     // Date this specific version was released
+        updateDate: "XX/XX/2027",
         platformSupport: 2,            // 0 = PC only | 1 = PC + Standalone VR | 2 = PC + Standalone VR + Mobile
         link: "/worlds/operation-hammerhead.html",
         vrcUrl: "",
@@ -25,7 +25,35 @@ const worldsData = [
         aircraft: [
             { name: "F-14A 'Tomcat'", image: "/static/aircraft/F-14A.png" }
         ]
-    },*/
+    },
+    {
+        id: "airshow-beach",
+        title: "Airshow Beach",
+        description: "Experience the thrill of airshows with a variety of aircraft and performances.",
+        image: "static/worlds/airshowbeach/world_airshowbeach.jpg",
+        version: "1.1.0",
+        releaseDate: "08/15/2026",
+        versionDate: "08/15/2026",
+        updateDate: "08/15/2026",
+        platformSupport: 2,            // 0 = PC only | 1 = PC + Standalone VR | 2 = PC + Standalone VR + Mobile
+        link: "/worlds/airshow-beach.html",
+        vrcUrl: "",
+        youtubeUrl: "",
+        devBlogPage: "world-airshow-beach-devblog.html",
+        visits: 343,
+        visitsDate: "09/14/2026",
+        changelogFile: "/changelogs/airshow-beach-changelog.js",
+        featured: true,
+        unlisted: false,
+        comingSoon: true,
+        sitetitle: "Airshow Beach",
+        tagline: "Experience the thrill of airshows with a variety of aircraft and performances.",
+        aircraft: [
+            { name: "F-14A 'Tomcat'", image: "/static/aircraft/F-14A.png" },
+            { name: "MiG-23MLA 'Flogger'", image: "/static/aircraft/MiG-23MLA.png" },
+            { name: "SH-3 'Sea King'", image: "/static/aircraft/SH-3.png" }
+        ]
+    },
     {
         id: "flight-week",
         title: "Flight Week - Test Flight",
@@ -40,8 +68,8 @@ const worldsData = [
         vrcUrl: "https://vrchat.com/home/world/wrld_bbb8669f-5f58-4146-a6cd-b58ab3e6fdb0",
         youtubeUrl: "",
         devBlogPage: "",
-        visits: 50365,
-        visitsDate: "06/06/2026",
+        visits: 51846,
+        visitsDate: "09/14/2026",
         changelogFile: "",
         featured: true,
         unlisted: false,
@@ -65,8 +93,8 @@ const worldsData = [
         vrcUrl: "https://vrchat.com/home/world/wrld_6d153aa3-3526-4a9c-8b08-455cc8e8a291",
         youtubeUrl: "https://www.youtube.com/watch?v=srVACDmkfkA",
         //devBlogPage: "world-naval-interceptor-devblog.html",
-        visits: 302097,
-        visitsDate: "06/06/2026 (PC and Cross-Platform Combined)",
+        visits: 324963,
+        visitsDate: "09/14/2026 (PC and Cross-Platform Combined)",
         changelogFile: "/changelogs/naval-interceptor-changelog.js",
         featured: true,
         unlisted: false,
@@ -94,9 +122,9 @@ const worldsData = [
         youtubeUrl: "",
         devBlogPage: "",
         visits: 307,
-        visitsDate: "06/06/2026",
+        visitsDate: "09/14/2026",
         changelogFile: "",
-        featured: false,
+        featured: true,
         unlisted: true,
         comingSoon: false,
         tagline: "Revealing the F-14A Tomcat and MiG-23MLA Flogger to the public for the first time",
@@ -119,10 +147,10 @@ const worldsData = [
         vrcUrl: "",
         youtubeUrl: "",
         devBlogPage: "",
-        visits: 1487,
-        visitsDate: "06/06/2026 (Qualifiers and Finals Combined)",
+        visits: 1493,
+        visitsDate: "09/14/2026 (Qualifiers and Finals Combined)",
         changelogFile: "/changelogs/black-aces-may-2023-changelog.js",
-        featured: true,
+        featured: false,
         unlisted: true,
         comingSoon: false,
         tagline: "",
@@ -144,8 +172,8 @@ const worldsData = [
         vrcUrl: "https://vrchat.com/home/world/wrld_91c304fd-3fb6-4169-85b9-1c6ad4b471e5",
         youtubeUrl: "",
         devBlogPage: "",
-        visits: 197898,
-        visitsDate: "06/06/2026 (PC and Cross-Platform Combined)",
+        visits: 212484,
+        visitsDate: "09/14/2026 (PC and Cross-Platform Combined)",
         changelogFile: "/changelogs/projekt-viggen-changelog.js",
         featured: true,
         unlisted: false,
@@ -173,7 +201,7 @@ const worldsData = [
         youtubeUrl: "",
         devBlogPage: "",
         visits: 234,
-        visitsDate: "06/06/2026",
+        visitsDate: "09/14/2026",
         changelogFile: "",
         featured: false,
         unlisted: true,
@@ -199,7 +227,7 @@ const worldsData = [
         youtubeUrl: "",
         devBlogPage: "",
         visits: 267,
-        visitsDate: "06/06/2026",
+        visitsDate: "09/14/2026",
         changelogFile: "",
         featured: false,
         unlisted: true,
@@ -225,10 +253,10 @@ const worldsData = [
         vrcUrl: "",
         youtubeUrl: "",
         devBlogPage: "",
-        visits: 114577,
-        visitsDate: "06/06/2026",
+        visits: 118312,
+        visitsDate: "09/14/2026",
         changelogFile: "/changelogs/crossroads-island-changelog.js",
-        featured: true,
+        featured: false,
         unlisted: false,
         comingSoon: false,
         tagline: "",
@@ -253,10 +281,10 @@ const worldsData = [
         vrcUrl: "",
         youtubeUrl: "",
         devBlogPage: "",
-        visits: 54290,
-        visitsDate: "06/06/2026",
+        visits: 54538,
+        visitsDate: "09/14/2026",
         changelogFile: "/changelogs/f16xl-nevada-changelog.js",
-        featured: true,
+        featured: false,
         unlisted: true,
         comingSoon: false,
         tagline: "",
@@ -281,7 +309,7 @@ const worldsData = [
         youtubeUrl: "",
         devBlogPage: "",
         visits: 104,
-        visitsDate: "06/06/2026",
+        visitsDate: "09/14/2026",
         changelogFile: "",
         featured: false,
         unlisted: true,
@@ -301,54 +329,30 @@ function isRecentlyUpdated(updateDate) {
     return (now - update) <= oneMonthInMs;
 }
 
-// Function to generate HTML for a single world card
-// hideMedium: when true, the 3rd card (index 2) is hidden on md screens (2-col layout)
+// Function to generate HTML for a single cinematic world card
 function generateWorldCard(world, index = 0, hideMedium = false) {
-    const recentlyUpdatedBadge = isRecentlyUpdated(world.versionDate) 
-        ? `<div class="absolute bottom-4 left-4 recently-updated-badge">
-               <span class="bg-blue-600 text-xs px-2 py-1 rounded">Recently Updated</span>
-           </div>`
-        : '';
-
-    const unListedBadge = world.unlisted 
-        ? `<div class="absolute bottom-4 left-4 unlisted-badge">
-               <span class="bg-gray-600 text-xs px-2 py-1 rounded">Unlisted</span>
-           </div>`
-        : '';
-    
-    const comingSoonOverlay = world.comingSoon 
-        ? `<div class="absolute inset-0 flex items-center justify-center">
-               <span class="text-2xl font-bold text-gray-400">Coming Soon</span>
-           </div>`
-        : '';
-    
-    const imageOpacity = world.comingSoon ? 'opacity-50' : '';
-    const linkDisabled = !world.link || world.link === '#' ? 'text-gray-500 cursor-default' : 'text-blue-400 hover:text-blue-300';
-    //const mediumHideClass = (hideMedium && index === 2) ? ` md:absolute md:h-0 md:overflow-hidden md:opacity-0 md:pointer-events-none lg:static lg:h-auto lg:overflow-visible lg:opacity-100 lg:pointer-events-auto ` : '';
-    const mediumHideClass = (hideMedium && index === 2) ? '' : '';
+    const tags = [
+        world.unlisted && 'Unlisted',
+        world.comingSoon && 'Coming Soon',
+        isRecentlyUpdated(world.versionDate) && 'Recently Updated'
+    ].filter(Boolean);
+    const mediumHideClass = hideMedium && index === 2 ? '' : '';
     return `
-        <div class="world-card bg-slate-800/50 rounded-xl overflow-hidden border border-slate-700 transition duration-300 flex flex-col h-full ${mediumHideClass}" 
-             data-aos="fade-up" 
-             data-aos-delay="${100 + (index * 50)}" 
-             data-update-date="${world.versionDate || ''}">
-            <div class="relative overflow-hidden h-60 flex-shrink-0">
-                <img src="${world.image}" alt="${world.title}" class="w-full h-full object-cover ${imageOpacity}">
-                <div class="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-black/80 to-transparent"></div>
-                ${recentlyUpdatedBadge}
-                ${unListedBadge}
-                ${comingSoonOverlay}
+        <article class="project-card ${mediumHideClass}" data-update-date="${world.versionDate || ''}">
+            <div class="project-image-wrap">
+                <img src="${world.image}" alt="${world.title}"${world.comingSoon ? ' class="project-image-coming-soon"' : ''} />
+                <div class="project-image-gradient"></div>
+                ${tags.length ? `<div class="project-tags">${tags.map((tag) => `<span>${tag}</span>`).join('')}</div>` : ''}
             </div>
-            <div class="p-6 flex flex-col flex-grow">
-                <h3 class="text-xl font-bold mb-2">${world.title}</h3>
-                <p class="text-gray-400 mb-4 flex-grow">${world.description}</p>
-                <div class="flex justify-between items-center pt-4 border-t border-slate-700 mt-auto">
-                    <span class="text-sm text-blue-400">Version ${world.version || ''} (${world.versionDate})</span>
-                    <a href="${world.link || '#'}" class="${linkDisabled} flex items-center flex-shrink-0 ml-4">
-                        View More <i data-feather="arrow-right" class="w-4 h-4 ml-1"></i>
-                    </a>
+            <div class="project-body">
+                <h3>${world.sitetitle || world.title}</h3>
+                <p>${world.description}</p>
+                <div class="project-footer">
+                    <span class="project-version">v${world.version || '—'} · ${world.versionDate || world.releaseDate || 'Date TBA'}</span>
+                    <a href="${world.link || '#'}">View World <span aria-hidden="true">↗</span></a>
                 </div>
             </div>
-        </div>
+        </article>
     `;
 }
 
