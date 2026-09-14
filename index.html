@@ -1,0 +1,131 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VTail | Cinematic Aerospace Design</title>
+    <meta name="description" content="VTail designs cinematic aerospace simulation experiences for immersive flight worlds and future standalone platforms." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="icon" type="image/png" href="/static/VTail_Logo.png" />
+  </head>
+  <body>
+    <div class="page-glow left"></div>
+    <div class="page-glow right"></div>
+    <div id="site-header"></div>
+    <main id="top">
+      <section class="hero">
+        <video class="hero-video" autoplay muted loop playsinline>
+          <source src="/static/hero-background.mp4" type="video/mp4" />
+        </video>
+        <div class="hero-noise"></div>
+        <div class="hero-overlay"></div>
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <!--<p class="eyebrow">Aim Higher</p>-->
+            <div class="hero-brand">
+              <img src="/static/VTail_Logo.png" alt="" />
+              <h1>VTail</h1>
+            </div>
+            <p class="lead">Virtual Aviation Worlds</p>
+            <div class="hero-actions">
+              <a href="#about" class="button button-secondary">About Me</a>
+              <a href="#projects" class="button button-primary">Worlds</a>
+              <a href="#social" class="button button-secondary">Contact</a>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="about" class="section">
+        <div class="container intro-grid">
+          <div class="section-copy">
+            <h2>About Me</h2>
+            <p>I'm VTail, a computer scientist and aerospace enthusiast with a passion for creating immersive virtual aviation experiences in my free time.</p>
+            <p>I strive to push the envelope and create some of the most impressive aviation experiences possible, for now in VRChat, and soon standalone projects.</p>
+          </div>
+          <div class="portrait-wrap"><div class="portrait-card"><img src="/static/VTail_Selfie.jpg" alt="VTail portrait" /></div></div>
+        </div>
+      </section>
+      <section id="projects" class="section dark-section topo-section">
+        <div class="container">
+          <div class="section-heading narrow">
+            <h2>Featured Worlds</h2>
+            <p>Some of the best worlds I've created or was involved with.</p>
+          </div>
+          <div class="project-grid" id="featured-worlds"></div>
+          <div class="featured-worlds-cta">
+            <a class="button button-secondary" href="./worlds.html">Browse All Worlds<span aria-hidden="true">&#8599;</span></a>
+          </div>
+        </div>
+      </section>
+      <section id="social" class="section dark-section social-section">
+        <div class="container">
+          <div class="section-heading narrow">
+            <h2>Connect and Follow Me Elsewhere</h2>
+          </div>
+          <div class="social-tabs">
+            <a class="social-tab" href="https://x.com/VTail64" target="_blank" rel="noreferrer"><span class="social-logo social-logo-x" aria-hidden="true">X</span><div><h3>X / Twitter</h3><p>General posts, updates and announcements on projects.</p></div><span class="social-tab-arrow" aria-hidden="true">&#8599;</span></a>
+            <a class="social-tab" href="https://www.youtube.com/@VTail64" target="_blank" rel="noreferrer"><span class="social-logo social-logo-youtube" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M21.6 7.2a2.8 2.8 0 0 0-2-2C17.8 4.7 12 4.7 12 4.7s-5.8 0-7.6.5a2.8 2.8 0 0 0-2 2A29 29 0 0 0 2 12a29 29 0 0 0 .4 4.8 2.8 2.8 0 0 0 2 2c1.8.5 7.6.5 7.6.5s5.8 0 7.6-.5a2.8 2.8 0 0 0 2-2A29 29 0 0 0 22 12a29 29 0 0 0-.4-4.8Z"/><path d="m10 15.5 5-3.5-5-3.5v7Z"/></svg></span><div><h3>YouTube</h3><p>World reveals, update trailers, and development videos.</p></div><span class="social-tab-arrow" aria-hidden="true">&#8599;</span></a>
+            <a class="social-tab" href="https://vrchat.com/home/user/usr_a46c8e81-ee41-4b13-b547-2b4037fee2d0" target="_blank" rel="noreferrer"><span class="social-logo social-logo-vrchat"><img src="/static/VRC_Logo_W.png" alt="" /></span><div><h3>VRChat Profile</h3><p>Check out my profile and the worlds I've created.</p></div><span class="social-tab-arrow" aria-hidden="true">&#8599;</span></a>
+            <a class="social-tab" href="https://vrchat.com/home/group/grp_1e78e468-334e-4aef-9358-48c241d86f2b" target="_blank" rel="noreferrer"><span class="social-logo social-logo-vrchat"><img src="/static/VRC_Logo_W.png" alt="" /></span><div><h3>VRChat Group</h3><p>Join the community on VRChat to stay up to date about world updates.</p></div><span class="social-tab-arrow" aria-hidden="true">&#8599;</span></a>
+            
+          </div>
+        </div>
+      </section>
+    </main>
+    <div id="site-footer"></div>
+    <script src="/worlds/worlds-data.js"></script>
+    <script>
+      async function loadPartial(id, file) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const res = await fetch(file);
+        if (!res.ok) throw new Error('Failed to load ' + file + ': ' + res.status);
+        el.innerHTML = await res.text();
+      }
+      window.addEventListener('DOMContentLoaded', async () => {
+        await Promise.all([
+          loadPartial('site-header', '/partials/header-cinematic.html'),
+          loadPartial('site-footer', '/partials/footer-cinematic.html')
+        ]);
+
+        const menuToggle = document.querySelector('.menu-toggle');
+        const mainNavigation = document.getElementById('main-navigation');
+        const homeLink = document.querySelector('.brand');
+        const homePath = new URL(homeLink.href, window.location.href).pathname;
+        if (window.location.pathname === homePath) {
+          homeLink.addEventListener('click', (event) => {
+            event.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        }
+        menuToggle.addEventListener('click', () => {
+          const isOpen = menuToggle.getAttribute('aria-expanded') === 'true';
+          menuToggle.setAttribute('aria-expanded', String(!isOpen));
+          menuToggle.setAttribute('aria-label', isOpen ? 'Open menu' : 'Close menu');
+          mainNavigation.classList.toggle('is-open', !isOpen);
+        });
+        mainNavigation.querySelectorAll('a').forEach((link) => {
+          link.addEventListener('click', () => {
+            menuToggle.setAttribute('aria-expanded', 'false');
+            menuToggle.setAttribute('aria-label', 'Open menu');
+            mainNavigation.classList.remove('is-open');
+          });
+        });
+        document.addEventListener('keydown', (event) => {
+          if (event.key === 'Escape' && mainNavigation.classList.contains('is-open')) {
+            menuToggle.setAttribute('aria-expanded', 'false');
+            menuToggle.setAttribute('aria-label', 'Open menu');
+            mainNavigation.classList.remove('is-open');
+            menuToggle.focus();
+          }
+        });
+
+        loadFeaturedWorlds('featured-worlds');
+      });
+    </script>
+  </body>
+</html>
+

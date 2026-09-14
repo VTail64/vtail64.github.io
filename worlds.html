@@ -1,0 +1,180 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Worlds | VTail</title>
+    <meta name="description" content="Explore VTail's complete collection of cinematic VR aviation worlds." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="icon" type="image/png" href="/static/VTail_Logo.png" />
+  </head>
+  <body>
+    <div class="page-glow left"></div>
+    <div class="page-glow right"></div>
+    <div id="site-header"></div>
+
+    <main id="top">
+      <div class="world-topography-section">
+        <section class="worlds-intro section">
+          <div class="container">
+            <h1>World Catalogue</h1>
+            <p class="worlds-intro-copy">Explore every world I've released for VRC, or played a role in developing.</p>
+          </div>
+        </section>
+
+        <section class="featured-carousel-section highlights-topo-section">
+          <div class="container">
+            <h2>Highlights</h2>
+            <div id="featured-carousel" class="featured-carousel" aria-live="polite"></div>
+            <div id="carousel-dots" class="carousel-dots" aria-label="Choose featured world"></div>
+            <!--<div class="carousel-controls" aria-label="Featured world controls">
+                <button id="carousel-previous" class="carousel-control" type="button" aria-label="Previous featured world">&#8592;</button>
+                <button id="carousel-next" class="carousel-control" type="button" aria-label="Next featured world">&#8594;</button>
+              </div>-->
+            <div class="carousel-scroll-cue-wrap">
+              <a class="carousel-scroll-cue" href="#world-library" aria-label="Scroll to the complete world collection">
+                <span>More worlds</span>
+                <span class="carousel-scroll-arrow" aria-hidden="true">&#8595;</span>
+              </a>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <section id="world-library" class="world-library-section section">
+        <div class="container">
+          <div class="world-library-heading">
+            <div>
+              <h2>Complete Collection</h2>
+            </div>
+            <div class="world-stats" aria-label="World collection statistics">
+              <span><strong id="total-worlds-count">0</strong> Total Worlds</span>
+              <span><strong id="total-visits-count">0</strong> Combined Visits</span>
+            </div>
+          </div>
+          <div id="all-worlds-container" class="project-grid worlds-grid"></div>
+        </div>
+      </section>
+    </main>
+
+    <div id="site-footer"></div>
+
+    <script src="/worlds/worlds-data.js"></script>
+    <script>
+      async function loadPartial(id, file) {
+        const element = document.getElementById(id);
+        if (!element) return;
+        const response = await fetch(file);
+        if (!response.ok) throw new Error('Failed to load ' + file + ': ' + response.status);
+        element.innerHTML = await response.text();
+      }
+
+      function initializeMenu() {
+        const menuToggle = document.querySelector('.menu-toggle');
+        const mainNavigation = document.getElementById('main-navigation');
+        if (!menuToggle || !mainNavigation) return;
+        menuToggle.addEventListener('click', () => {
+          const isOpen = menuToggle.getAttribute('aria-expanded') === 'true';
+          menuToggle.setAttribute('aria-expanded', String(!isOpen));
+          menuToggle.setAttribute('aria-label', isOpen ? 'Open menu' : 'Close menu');
+          mainNavigation.classList.toggle('is-open', !isOpen);
+        });
+        mainNavigation.querySelectorAll('a').forEach((link) => {
+          link.addEventListener('click', () => {
+            menuToggle.setAttribute('aria-expanded', 'false');
+            menuToggle.setAttribute('aria-label', 'Open menu');
+            mainNavigation.classList.remove('is-open');
+          });
+        });
+      }
+
+      function getWorldTags(world) {
+        return [
+          world.unlisted && 'Unlisted',
+          world.comingSoon && 'Coming Soon',
+          isRecentlyUpdated(world.versionDate) && 'Recently Updated'
+        ].filter(Boolean);
+      }
+
+      function renderFeaturedCarousel(worlds) {
+        const carousel = document.getElementById('featured-carousel');
+        const dots = document.getElementById('carousel-dots');
+        let activeIndex = 0;
+        let timer;
+
+        carousel.innerHTML = `<div class="featured-track">${worlds.map((world, index) => {
+          const tags = getWorldTags(world);
+          return `
+            <article class="featured-slide">
+              <img src="${world.image}" alt="${world.title}" />
+              <div class="featured-slide-overlay"></div>
+              <div class="featured-slide-content">
+                <div class="project-tags">${tags.map((tag) => `<span>${tag}</span>`).join('')}</div>
+                <h3>${world.sitetitle || world.title}</h3>
+                <p>${world.tagline || world.description}</p>
+                <div class="featured-slide-footer">
+                  <span>v${world.version || '&mdash;'} &middot; ${world.versionDate || world.releaseDate || 'Date TBA'}</span>
+                  <a href="${world.link || '#'}">View World <span aria-hidden="true">&#8599;</span></a>
+                </div>
+              </div>
+            </article>
+          `;
+        }).join('')}</div>`;
+        dots.innerHTML = worlds.map((item, index) => `<button class="carousel-dot${index === activeIndex ? ' is-active' : ''}" type="button" aria-label="Show ${item.sitetitle || item.title}" aria-current="${index === activeIndex}"></button>`).join('');
+        const track = carousel.querySelector('.featured-track');
+
+        function render() {
+          track.style.transform = `translateX(-${activeIndex * 100}%)`;
+          dots.querySelectorAll('.carousel-dot').forEach((dot, index) => {
+            dot.classList.toggle('is-active', index === activeIndex);
+            dot.setAttribute('aria-current', String(index === activeIndex));
+          });
+        }
+
+        function startTimer() {
+          window.clearInterval(timer);
+          timer = window.setInterval(() => {
+            activeIndex = (activeIndex + 1) % worlds.length;
+            render();
+          }, 6500);
+        }
+
+        /*document.getElementById('carousel-previous').addEventListener('click', () => {
+          activeIndex = (activeIndex - 1 + worlds.length) % worlds.length;
+          render();
+          startTimer();
+        });
+        document.getElementById('carousel-next').addEventListener('click', () => {
+          activeIndex = (activeIndex + 1) % worlds.length;
+          render();
+          startTimer();
+        });*/
+        dots.querySelectorAll('.carousel-dot').forEach((dot, index) => {
+          dot.addEventListener('click', () => {
+            activeIndex = index;
+            render();
+            startTimer();
+          });
+        });
+        render();
+        startTimer();
+      }
+
+      window.addEventListener('DOMContentLoaded', async () => {
+        await Promise.all([
+          loadPartial('site-header', '/partials/header-cinematic.html'),
+          loadPartial('site-footer', '/partials/footer-cinematic.html')
+        ]);
+        initializeMenu();
+        const featuredWorlds = worldsData.filter((world) => world.featured);
+        renderFeaturedCarousel(featuredWorlds);
+        document.getElementById('total-worlds-count').textContent = worldsData.length;
+        document.getElementById('total-visits-count').textContent = worldsData.reduce((sum, world) => sum + (world.visits || 0), 0).toLocaleString();
+        loadAllWorlds('all-worlds-container');
+      });
+    </script>
+  </body>
+</html>
