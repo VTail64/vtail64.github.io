@@ -3,9 +3,9 @@
 const worldsData = [
     {
         id: "operation-hammerhead",
-        title: "Operation Hammerhead (Working Title)",
+        title: "Operation Hammerhead",
         description: "Reclaim an occupied island from invading forces in this team-based PvE world.",
-        image: "static/worlds/fleetdefense/world_fd.jpg",
+        image: "static/worlds/fleetdefense/world_FD.jpg",
         version: "0.0.0",
         releaseDate: "XX/XX/2027",     // Placeholder until release
         versionDate: "XX/XX/XXXX",     // Date this specific version was released
